@@ -5,69 +5,133 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Aysha Shamli – QA & Automation Tester</title>
   <style>
+    * {
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
     body {
+      margin: 0;
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       background-color: #f4f7fa;
       color: #333;
-      margin: 0;
-      padding: 0;
     }
     header {
       background-color: #002b5b;
       color: white;
-      padding: 40px 20px;
+      padding: 60px 20px;
       text-align: center;
+      animation: fadeInDown 1.2s ease-out;
     }
     header h1 {
       margin: 0;
-      font-size: 2.5rem;
+      font-size: 2.8rem;
     }
     header p {
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       margin-top: 10px;
     }
+
     section {
-      padding: 40px 20px;
+      padding: 50px 20px;
       max-width: 1000px;
       margin: auto;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease-out;
     }
+
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     h2 {
       border-bottom: 2px solid #ddd;
       padding-bottom: 5px;
       color: #002b5b;
+      margin-bottom: 20px;
     }
+
     ul {
       padding-left: 20px;
+      line-height: 1.8;
     }
+
     .project-table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 10px;
     }
-    .project-table th,
-    .project-table td {
+
+    .project-table th, .project-table td {
       border: 1px solid #ccc;
-      padding: 10px;
+      padding: 12px;
       text-align: left;
+      transition: background 0.3s;
     }
+
+    .project-table tr:hover {
+      background-color: #eef5ff;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 25px;
+      margin-top: 20px;
+      background-color: #002b5b;
+      color: #fff;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #01407c;
+      transform: scale(1.05);
+    }
+
     .contact a {
       color: #002b5b;
       text-decoration: none;
       font-weight: 500;
     }
+
     footer {
       text-align: center;
       background-color: #002b5b;
       color: white;
-      padding: 20px;
+      padding: 25px;
       font-size: 0.9rem;
     }
+
     blockquote {
       font-style: italic;
       color: #555;
       border-left: 4px solid #ccc;
       margin: 20px 0;
       padding-left: 15px;
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2rem;
+      }
+      .btn {
+        font-size: 0.9rem;
+        padding: 10px 18px;
+      }
     }
   </style>
 </head>
@@ -146,20 +210,23 @@
   </section>
 
   <section>
-    <h2>💡 Blog / Notes (Coming Soon)</h2>
+    <h2>💡 Blog / Notes</h2>
     <ul>
       <li>Test Case Writing for Beginners</li>
       <li>Selenium Tips & Tricks</li>
       <li>Real QA Interview Questions</li>
       <li>Postman Collections Explained</li>
     </ul>
+    <a href="https://ayshas-notes.gitbook.io/aysha/test-cases" target="_blank" class="btn">
+      📖 View My Test Case Notes on GitBook
+    </a>
   </section>
 
   <section class="contact">
     <h2>📫 Contact Me</h2>
     <ul>
       <li><strong>LinkedIn:</strong> <a href="https://linkedin.com" target="_blank">linkedin.com/in/ayshashamli</a></li>
-      <li><strong>GitHub:</strong> <a href="https://github.com/aysha-shamli" target="_blank">github.com/ayshashamli</a></li>
+      <li><strong>GitHub:</strong> <a href="https://github.com/ayshashamli" target="_blank">github.com/ayshashamli</a></li>
       <li><strong>Email:</strong> shamli.aysha@gmail.com</li>
       <li><strong>Location:</strong> India | Open to Remote Roles</li>
     </ul>
@@ -175,5 +242,25 @@
     © 2025 Aysha Shamli | Portfolio Built with 💻 & ❤️
   </footer>
 
+  <script>
+    // Reveal sections on scroll
+    const sections = document.querySelectorAll("section");
+    const options = {
+      threshold: 0.2
+    };
+
+    const reveal = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, options);
+
+    sections.forEach(section => {
+      reveal.observe(section);
+    });
+  </script>
 </body>
 </html>

@@ -5,29 +5,32 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Aysha Shamli – QA Tester Portfolio</title>
   <style>
+    /* ----------- Base Styling ----------- */
     body {
       margin: 0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to bottom right, #fff0f5, #f0f8ff);
-      color: #4b2e2e;
+      background: linear-gradient(to bottom right, #f6f9fc, #e9eff4);
+      color: #2f3a4a;
+      animation: fadeInBody 1.2s ease-in-out;
     }
 
     header {
-      background-color: #ffe4ec;
+      background-color: #1e2a38;
       padding: 2rem;
       text-align: center;
-      border-bottom: 2px solid #f3cce3;
+      color: #ffffff;
+      border-bottom: 4px solid #3f5873;
     }
 
     header h1 {
       margin: 0;
-      font-size: 2.8rem;
-      color: #d63384;
+      font-size: 2.6rem;
     }
 
     header p {
       font-size: 1.1rem;
-      margin: 0.5rem 0 0;
+      margin-top: 0.5rem;
+      color: #cbd6e2;
     }
 
     .container {
@@ -50,19 +53,21 @@
     }
 
     .section {
-      background-color: #fff;
-      border: 1px solid #f3d1e6;
-      border-radius: 12px;
+      background-color: #ffffff;
+      border: 1px solid #d7dee6;
+      border-radius: 10px;
       padding: 1.5rem;
       margin-bottom: 1.5rem;
-      box-shadow: 0 4px 12px rgba(246, 202, 229, 0.3);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      animation: slideUp 0.8s ease forwards;
+      opacity: 0;
     }
 
     .section h2 {
       margin-top: 0;
-      color: #a32c64;
+      color: #2a445e;
       font-size: 1.5rem;
-      border-bottom: 1px solid #f9d1e0;
+      border-bottom: 1px solid #e2e8f0;
       padding-bottom: 0.5rem;
     }
 
@@ -73,7 +78,7 @@
     a.gitbook-link {
       display: block;
       margin-top: 0.5rem;
-      color: #a93d85;
+      color: #1a5ca4;
       font-weight: bold;
       word-break: break-all;
       text-decoration: underline;
@@ -82,8 +87,43 @@
     footer {
       text-align: center;
       font-size: 0.9rem;
-      color: #888;
+      color: #7d8a99;
       padding: 2rem 0;
+    }
+
+    /* ----------- Animations ----------- */
+    @keyframes slideUp {
+      from {
+        transform: translateY(40px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0px);
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeInBody {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .section:nth-child(1) { animation-delay: 0.1s; }
+    .section:nth-child(2) { animation-delay: 0.2s; }
+    .section:nth-child(3) { animation-delay: 0.3s; }
+    .section:nth-child(4) { animation-delay: 0.4s; }
+    .section:nth-child(5) { animation-delay: 0.5s; }
+    .section:nth-child(6) { animation-delay: 0.6s; }
+    .section:nth-child(7) { animation-delay: 0.7s; }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
     }
   </style>
 </head>
@@ -91,7 +131,7 @@
 
   <header>
     <h1>Aysha Shamli</h1>
-    <p>QA Tester | Python & Java | Selenium | Postman | JIRA | JMeter</p>
+    <p>QA Tester | Selenium | Python & Java | Postman | JIRA | JMeter</p>
   </header>
 
   <div class="container">
@@ -113,10 +153,10 @@
       <div class="section">
         <h2>👩🏻‍💻 Summary</h2>
         <p>
-          I am Aysha Shamli, a dedicated QA tester with a strong foundation in both manual and automation testing.
-          I hold a B.Tech in Electronics and Communication Engineering (2021) and have trained in tools like Selenium,
-          Postman, JIRA, JMeter, and Git. I’ve worked as a freelance AI trainer and currently teach Python to students aged 10–14.
-          I am open to QA roles in Bangalore or remote/hybrid opportunities.
+          I am Aysha Shamli, a committed QA Tester with a foundation in both manual and automation testing.
+          I completed my B.Tech in Electronics and Communication Engineering in 2021 and have undergone extensive training in QA tools.
+          I bring hands-on experience in Selenium (Java & Python), Postman, JIRA, and JMeter.
+          With a background in freelance AI training and teaching Python to children, I’m enthusiastic about both learning and contributing to quality-focused teams.
         </p>
       </div>
 
@@ -124,7 +164,7 @@
         <h2>🎓 Education</h2>
         <ul>
           <li>B.Tech in Electronics and Communication Engineering – 2021</li>
-          <li>Manual and Automation Testing Training – Luminar Technolab</li>
+          <li>Manual and Automation Testing – Luminar Technolab</li>
         </ul>
       </div>
 
@@ -133,8 +173,10 @@
         <ul>
           <li>Manual & Automation Testing</li>
           <li>Selenium WebDriver (Java & Python)</li>
-          <li>Postman, JMeter, Git, JIRA</li>
-          <li>Basic scripting: Python, Java, Bash</li>
+          <li>API Testing: Postman, JMeter</li>
+          <li>Version Control: Git</li>
+          <li>Bug Tracking: JIRA</li>
+          <li>Languages: Python, Java, Bash</li>
         </ul>
       </div>
 
@@ -149,17 +191,17 @@
       <div class="section">
         <h2>📂 Projects</h2>
         <ul>
-          <li>Login Test Automation using Selenium & Java</li>
-          <li>API Testing practice with Postman and JMeter</li>
-          <li>Bug Tracking Simulation using JIRA</li>
+          <li>Automated Login Testing using Selenium and Java</li>
+          <li>API Testing scenarios using Postman and JMeter</li>
+          <li>Bug Simulation & Reporting using JIRA</li>
         </ul>
       </div>
 
       <div class="section">
         <h2>📬 Contact</h2>
         <p>Email: your-email@example.com</p>
-        <p>LinkedIn: linkedin.com/in/ayshashamli</p>
-        <p>Location: Open to remote / Bangalore</p>
+        <p>LinkedIn: <a href="https://linkedin.com/in/ayshashamli" target="_blank">linkedin.com/in/ayshashamli</a></p>
+        <p>Location: Open to Remote / Bangalore opportunities</p>
       </div>
 
     </div>

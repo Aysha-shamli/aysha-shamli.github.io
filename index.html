@@ -1,235 +1,562 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Aysha Shamli – QA Tester Portfolio</title>
-  <style>
-    /* ----------- Base Styling ----------- */
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to bottom right, #f6f9fc, #e9eff4);
-      color: #2f3a4a;
-      animation: fadeInBody 1.2s ease-in-out;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aysha Shamli - Ultra Modern Portfolio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Custom CSS for animations and thematic elements */
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a, #1a1a2e, #0a0a0a); /* Dark, space-like gradient */
+            color: #e0e0e0;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
 
-    header {
-      background-color: #1e2a38;
-      padding: 2rem;
-      text-align: center;
-      color: #ffffff;
-      border-bottom: 4px solid #3f5873;
-    }
+        /* Starfield background */
+        .starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            background: transparent;
+        }
 
-    header h1 {
-      margin: 0;
-      font-size: 2.6rem;
-    }
+        /* Generate stars using box-shadow */
+        .starfield::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            box-shadow:
+                /* Small stars */
+                0 0 0 1px rgba(255, 255, 255, 0.5),
+                /* Medium stars */
+                -100px 50px 0 2px rgba(255, 255, 255, 0.7),
+                150px -80px 0 1px rgba(255, 255, 255, 0.6),
+                -200px -120px 0 2px rgba(255, 255, 255, 0.8),
+                250px 180px 0 1px rgba(255, 255, 255, 0.5),
+                /* Large stars */
+                -300px 250px 0 3px rgba(255, 255, 255, 0.9),
+                350px -200px 0 2px rgba(255, 255, 255, 0.7),
+                -400px -300px 0 1px rgba(255, 255, 255, 0.6),
+                450px 320px 0 3px rgba(255, 255, 255, 0.9),
+                -500px 100px 0 2px rgba(255, 255, 255, 0.8),
+                550px -150px 0 1px rgba(255, 255, 255, 0.5),
+                -600px -250px 0 3px rgba(255, 255, 255, 0.9),
+                650px 70px 0 2px rgba(255, 255, 255, 0.7),
+                -700px 190px 0 1px rgba(255, 255, 255, 0.6),
+                750px -300px 0 3px rgba(255, 255, 255, 0.9),
+                /* Add more stars for density */
+                800px 50px 0 1px rgba(255, 255, 255, 0.5),
+                -850px -100px 0 2px rgba(255, 255, 255, 0.7),
+                900px 200px 0 1px rgba(255, 255, 255, 0.6),
+                -950px -180px 0 2px rgba(255, 255, 255, 0.8),
+                1000px 250px 0 1px rgba(255, 255, 255, 0.5),
+                -1050px -220px 0 3px rgba(255, 255, 255, 0.9),
+                1100px 150px 0 2px rgba(255, 255, 255, 0.7),
+                -1150px -70px 0 1px rgba(255, 255, 255, 0.6),
+                1200px 300px 0 3px rgba(255, 255, 255, 0.9),
+                -1250px 80px 0 2px rgba(255, 255, 255, 0.8),
+                1300px -250px 0 1px rgba(255, 255, 255, 0.5),
+                -1350px 120px 0 3px rgba(255, 255, 255, 0.9),
+                1400px -10px 0 2px rgba(255, 255, 255, 0.7),
+                -1450px 280px 0 1px rgba(255, 255, 255, 0.6),
+                1500px -190px 0 3px rgba(255, 255, 255, 0.9);
+            animation: animateStars 50s linear infinite;
+        }
 
-    header p {
-      font-size: 1.1rem;
-      margin-top: 0.5rem;
-      color: #cbd6e2;
-    }
+        @keyframes animateStars {
+            from {
+                transform: translateY(0);
+            }
+            to {
+                transform: translateY(-2000px); /* Adjust for star density and speed */
+            }
+        }
 
-    .container {
-      max-width: 1200px;
-      margin: 2rem auto;
-      display: flex;
-      gap: 2rem;
-      padding: 0 1rem;
-      flex-wrap: wrap;
-    }
+        /* Abstract shapes for forest/tech blend */
+        .abstract-shape-1 {
+            position: absolute;
+            top: 10%;
+            left: -5%;
+            width: 300px;
+            height: 300px;
+            background: linear-gradient(45deg, #3a0ca3, #4361ee); /* Deep blue/purple */
+            border-radius: 50% 20% 50% 30%;
+            filter: blur(80px);
+            opacity: 0.3;
+            animation: floatShape 15s ease-in-out infinite alternate;
+            z-index: -1;
+        }
 
-    .main-content {
-      flex: 2;
-      min-width: 300px;
-    }
+        .abstract-shape-2 {
+            position: absolute;
+            bottom: 5%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: linear-gradient(135deg, #2a9d8f, #264653); /* Forest green/dark teal */
+            border-radius: 30% 50% 20% 50%;
+            filter: blur(90px);
+            opacity: 0.25;
+            animation: floatShape 18s ease-in-out infinite alternate-reverse;
+            z-index: -1;
+        }
 
-    .sidebar {
-      flex: 1;
-      min-width: 250px;
-    }
+        @keyframes floatShape {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            50% {
+                transform: translate(20px, 30px) rotate(5deg);
+            }
+            100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+        }
 
-    .section {
-      background-color: #ffffff;
-      border: 1px solid #d7dee6;
-      border-radius: 10px;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-      animation: slideUp 0.8s ease forwards;
-      opacity: 0;
-    }
+        /* General section styling */
+        section {
+            padding: 4rem 0;
+            position: relative;
+            z-index: 1; /* Ensure content is above background animations */
+        }
 
-    .section h2 {
-      margin-top: 0;
-      color: #2a445e;
-      font-size: 1.5rem;
-      border-bottom: 1px solid #e2e8f0;
-      padding-bottom: 0.5rem;
-    }
+        /* Hero section specific styles */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
 
-    ul {
-      padding-left: 1.2rem;
-    }
+        .hero-content {
+            z-index: 10;
+            max-width: 800px;
+            padding: 1rem;
+        }
 
-    a.gitbook-link {
-      display: block;
-      margin-top: 0.5rem;
-      color: #1a5ca4;
-      font-weight: bold;
-      word-break: break-all;
-      text-decoration: underline;
-    }
+        .hero-title {
+            font-size: 3.5rem;
+            line-height: 1.1;
+            font-weight: 700;
+            background: linear-gradient(90deg, #a78bfa, #8b5cf6, #6366f1); /* Purple to blue gradient */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInScale 1.5s ease-out forwards;
+        }
 
-    footer {
-      text-align: center;
-      font-size: 0.9rem;
-      color: #7d8a99;
-      padding: 2rem 0;
-    }
+        .hero-subtitle {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-top: 1rem;
+            opacity: 0;
+            animation: fadeIn 2s ease-out 0.5s forwards;
+        }
 
-    /* ----------- Animations ----------- */
-    @keyframes slideUp {
-      from {
-        transform: translateY(40px);
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0px);
-        opacity: 1;
-      }
-    }
+        .hero-description {
+            font-size: 1.1rem;
+            margin-top: 1.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
+            animation: fadeIn 2s ease-out 1s forwards;
+        }
 
-    @keyframes fadeInBody {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
-    }
+        /* Fade-in animation for sections */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
 
-    .section:nth-child(1) { animation-delay: 0.1s; }
-    .section:nth-child(2) { animation-delay: 0.2s; }
-    .section:nth-child(3) { animation-delay: 0.3s; }
-    .section:nth-child(4) { animation-delay: 0.4s; }
-    .section:nth-child(5) { animation-delay: 0.5s; }
-    .section:nth-child(6) { animation-delay: 0.6s; }
-    .section:nth-child(7) { animation-delay: 0.7s; }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
-    @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-      }
-    }
-  </style>
+        /* Card styles */
+        .card {
+            background-color: rgba(30, 30, 45, 0.8); /* Slightly transparent dark background */
+            backdrop-filter: blur(10px); /* Frosted glass effect */
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Button styles */
+        .btn-primary {
+            background: linear-gradient(90deg, #8b5cf6, #6366f1); /* Purple to blue */
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(90deg, #6366f1, #8b5cf6);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Keyframe animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Project image hover effect */
+        .project-image-container {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-image {
+            transition: transform 0.5s ease;
+        }
+
+        .project-image-container:hover .project-image {
+            transform: scale(1.05);
+        }
+
+        /* Skill icon animations */
+        .skill-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .skill-item:hover .skill-icon {
+            transform: rotate(10deg) scale(1.1);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            .hero-description {
+                font-size: 1rem;
+            }
+            section {
+                padding: 3rem 0;
+            }
+        }
+    </style>
 </head>
-<body>
+<body class="antialiased">
+    <!-- Starfield and Abstract Shapes Background -->
+    <div class="starfield"></div>
+    <div class="abstract-shape-1"></div>
+    <div class="abstract-shape-2"></div>
 
-  <header>
-    <h1>Aysha Shamli</h1>
-    <p>QA Tester | Selenium | Python | Java | SQL | Postman | JIRA | JMeter</p>
-  </header>
+    <!-- Navigation Bar -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-gray-900 bg-opacity-70 backdrop-blur-md p-4 shadow-lg rounded-b-xl">
+        <div class="container mx-auto flex justify-between items-center px-4">
+            <a href="#" class="text-2xl font-bold text-white tracking-wider">Aysha Shamli</a>
+            <div class="space-x-4">
+                <a href="#about" class="text-gray-300 hover:text-white transition duration-300">About</a>
+                <a href="#experience" class="text-gray-300 hover:text-white transition duration-300">Experience</a>
+                <a href="#projects" class="text-gray-300 hover:text-white transition duration-300">Projects</a>
+                <a href="#skills" class="text-gray-300 hover:text-white transition duration-300">Skills</a>
+                <a href="#contact" class="text-gray-300 hover:text-white transition duration-300">Contact</a>
+            </div>
+        </div>
+    </nav>
 
-  <div class="container">
+    <!-- Hero Section -->
+    <section id="hero" class="hero-section text-white relative">
+        <div class="hero-content">
+            <h1 class="hero-title">Hello, I'm Aysha Shamli</h1>
+            <p class="hero-subtitle">QA Engineer | AI Trainer | Innovator</p>
+            <p class="hero-description mt-6 text-lg text-gray-300 leading-relaxed">
+                A BTech graduate with 1 year of hands-on experience in manual software testing and a background as a freelance AI Trainer. I'm passionate about ensuring quality in web and API applications and optimizing language models.
+            </p>
+            <div class="mt-8 space-x-4">
+                <a href="#contact" class="btn-primary inline-block px-8 py-3 rounded-full font-semibold text-white shadow-lg">Get in Touch</a>
+                <a href="https://github.com/Aysha-shamli/" target="_blank" class="inline-block px-8 py-3 rounded-full font-semibold text-gray-300 border border-gray-600 hover:border-white hover:text-white transition duration-300">View GitHub</a>
+            </div>
+        </div>
+    </section>
 
-    <!-- Sidebar with GitBook -->
-    <div class="sidebar">
-      <div class="section">
-        <h2>📘 GitBook Notes</h2>
-        <p>Explore my curated notes and tutorials:</p>
-        <a class="gitbook-link" href="https://shamli.gitbook.io/" target="_blank">
-          https://shamli.gitbook.io/
-        </a>
-      </div>
-    </div>
+    <!-- About Section -->
+    <section id="about" class="fade-in-section container mx-auto px-4 py-16">
+        <h2 class="text-4xl font-bold text-center mb-12 text-white">About Me</h2>
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div class="text-lg leading-relaxed text-gray-300">
+                <p class="mb-4">
+                    I am a BTech graduate in Electronics and Communication Engineering with 1 year of hands-on experience in manual software testing, along with work as a freelance AI Trainer. My journey in software testing has focused on functional testing, bug reporting, and test case execution across web and API-based applications. I've also honed my skills in designing test scenarios, severity/priority classification, and detailed defect reporting.
+                </p>
+                <p class="mb-4">
+                    As an AI Trainer, I've had the unique opportunity to contribute to prompt design and response optimization for cutting-edge language models. This role has sharpened my analytical skills, allowing me to identify patterns and anomalies in AI-generated outputs and collaborate with cross-functional teams to enhance AI performance.
+                </p>
+                <p>
+                    I am actively seeking opportunities in Quality Assurance where I can apply and expand my skills across both manual and automation testing, contributing to robust and high-quality software solutions.
+                </p>
+            </div>
+            <div class="flex justify-center">
+                <img src="https://placehold.co/400x400/1a1a2e/ffffff?text=Aysha+Shamli" alt="Aysha Shamli" class="rounded-full shadow-2xl border-4 border-purple-500 transform hover:scale-105 transition-transform duration-300">
+            </div>
+        </div>
+    </section>
 
-    <!-- Main Content -->
-    <div class="main-content">
+    <!-- Work Experience Section -->
+    <section id="experience" class="fade-in-section container mx-auto px-4 py-16">
+        <h2 class="text-4xl font-bold text-center mb-12 text-white">Work Experience</h2>
+        <div class="space-y-10">
+            <!-- Luminar Technolab -->
+            <div class="card p-8 rounded-xl shadow-xl flex flex-col md:flex-row items-start md:items-center">
+                <div class="mb-4 md:mb-0 md:mr-8 flex-shrink-0">
+                    <i class="fas fa-briefcase text-5xl text-purple-400"></i>
+                </div>
+                <div>
+                    <h3 class="text-3xl font-semibold text-white mb-2">Software Tester, Luminar Technolab</h3>
+                    <p class="text-lg text-gray-400 mb-4">Feb 2024 - May 2025</p>
+                    <ul class="list-disc list-inside space-y-2 text-gray-300">
+                        <li>Performed manual testing on web-based applications and ERP modules.</li>
+                        <li>Created detailed test cases and scenarios based on requirements and use cases.</li>
+                        <li>Executed test cases, tracked bugs, and verified fixes.</li>
+                        <li>Used tools like JIRA for bug reporting and tracking.</li>
+                        <li>Tested APIs using Postman and validated backend responses.</li>
+                        <li>Documented test reports and communicated findings to development teams.</li>
+                    </ul>
+                </div>
+            </div>
 
-      <div class="section">
-        <h2>👩🏻‍💻 Summary</h2>
-        <p>
-          I am Aysha Shamli, a committed QA Tester with a foundation in both manual and automation testing.
-          I completed my B.Tech in Electronics and Communication Engineering in 2021 and have undergone extensive training in QA tools.
-          I bring hands-on experience in Selenium (Java), Postman, JIRA, and JMeter.
-          With a background in freelance AI training, I’m enthusiastic about both learning and contributing to quality-focused teams.
-        </p>
-      </div>
+            <!-- Outlier - AI Trainer -->
+            <div class="card p-8 rounded-xl shadow-xl flex flex-col md:flex-row items-start md:items-center">
+                <div class="mb-4 md:mb-0 md:mr-8 flex-shrink-0">
+                    <i class="fas fa-robot text-5xl text-teal-400"></i>
+                </div>
+                <div>
+                    <h3 class="text-3xl font-semibold text-white mb-2">AI Trainer, Outlier</h3>
+                    <p class="text-lg text-gray-400 mb-4">March 2024 - Present</p>
+                    <ul class="list-disc list-inside space-y-2 text-gray-300">
+                        <li>Designed and refined effective prompts for AI language models to generate accurate and relevant responses.</li>
+                        <li>Analyzed AI-generated outputs to assess accuracy, quality, and relevance, making necessary improvements.</li>
+                        <li>Conducted iterative testing and incorporated feedback to enhance prompt effectiveness.</li>
+                        <li>Identified patterns and anomalies in AI responses using strong analytical skills.</li>
+                        <li>Collaborated with cross-functional teams to optimize AI performance and improve user experience.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
 
-      <div class="section">
-        <h2>🎓 Education</h2>
-        <ul>
-          <li>B.Tech in Electronics and Communication Engineering – 2021</li>
-          <li>Manual and Automation Testing – Luminar Technolab</li>
-        </ul>
-      </div>
+    <!-- Projects Section -->
+    <section id="projects" class="fade-in-section container mx-auto px-4 py-16">
+        <h2 class="text-4xl font-bold text-center mb-12 text-white">My Projects</h2>
+        <div class="grid md:grid-cols-2 gap-10">
+            <!-- Pestrashop Project -->
+            <div class="card p-6 rounded-xl shadow-xl">
+                <div class="project-image-container rounded-lg overflow-hidden mb-6">
+                    <img src="https://placehold.co/600x400/2a9d8f/ffffff?text=Pestrashop+Manual+Testing" alt="Pestrashop Project" class="w-full h-auto rounded-lg project-image">
+                </div>
+                <h3 class="text-2xl font-semibold text-white mb-3">Manual Project - Pestrashop</h3>
+                <p class="text-gray-300 mb-4 leading-relaxed">
+                    A comprehensive manual testing project focusing on a web-based e-commerce application.
+                </p>
+                <ul class="list-disc list-inside space-y-2 text-gray-400">
+                    <li><strong>Test Case Design & Execution:</strong> Created and executed detailed test cases covering functional, UI, and usability testing.</li>
+                    <li><strong>Bug Reporting & Defect Tracking:</strong> Identified, documented, and reported defects, categorizing them based on severity and priority.</li>
+                    <li><strong>Defect Analysis & Test Reports:</strong> Analyzed defect distribution and prepared comprehensive test reports.</li>
+                    <li><strong>Cross-Module Testing:</strong> Ensured seamless functionality and integration across different sections like product selection, user authentication, and payment processing.</li>
+                </ul>
+            </div>
 
-      <div class="section">
-        <h2>🛠️ Skills</h2>
-        <ul>
-          <li>Manual & Automation Testing</li>
-          <li>Selenium WebDriver (Java)</li>
-          <li>API Testing: Postman</li>
-          <li>Performance Testing: JMeter</li>
-          <li>Version Control: Git</li>
-          <li>Bug Tracking: JIRA</li>
-          <li>Languages: Python, Java, SQL, Bash</li>
-        </ul>
-      </div>
+            <!-- Tool Shop Project -->
+            <div class="card p-6 rounded-xl shadow-xl">
+                <div class="project-image-container rounded-lg overflow-hidden mb-6">
+                    <img src="https://placehold.co/600x400/4361ee/ffffff?text=Tool+Shop+Automation" alt="Tool Shop Project" class="w-full h-auto rounded-lg project-image">
+                </div>
+                <h3 class="text-2xl font-semibold text-white mb-3">Automation Project - Tool Shop</h3>
+                <p class="text-gray-300 mb-4 leading-relaxed">
+                    An automation testing initiative for e-commerce functionalities, leveraging modern testing frameworks.
+                </p>
+                <ul class="list-disc list-inside space-y-2 text-gray-400">
+                    <li>Executed automated tests for e-commerce functionalities, including product browsing, add-to-cart, and checkout.</li>
+                    <li><strong>Data-Driven Testing:</strong> Implemented data-driven testing using Selenium and TestNG, ensuring comprehensive test coverage across diverse user scenarios and data sets.</li>
+                    <li><strong>Maven-Driven Test Execution & Dependency Management:</strong> Utilized Maven for efficient dependency management and streamlined test execution, enhancing project maintainability and scalability.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
 
-      <div class="section">
-        <h2>💼 Experience</h2>
-        <ul>
-          <li>Freelance AI Trainer (Malayalam) – Outlier</li>
-        </ul>
-      </div>
+    <!-- Skills Section -->
+    <section id="skills" class="fade-in-section container mx-auto px-4 py-16">
+        <h2 class="text-4xl font-bold text-center mb-12 text-white">My Skills</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Technical Skills -->
+            <div class="card p-6 rounded-xl shadow-xl">
+                <h3 class="text-2xl font-semibold text-white mb-4 flex items-center"><i class="fas fa-code text-purple-400 mr-3"></i>Technical Skills</h3>
+                <ul class="space-y-3 text-gray-300">
+                    <li class="skill-item flex items-center"><i class="fas fa-check-circle text-green-400 mr-2 skill-icon"></i>Functional Testing</li>
+                    <li class="skill-item flex items-center"><i class="fas fa-check-circle text-green-400 mr-2 skill-icon"></i>Manual Testing</li>
+                    <li class="skill-item flex items-center"><i class="fas fa-check-circle text-green-400 mr-2 skill-icon"></i>Automation Testing</li>
+                    <li class="skill-item flex items-center"><i class="fas fa-check-circle text-green-400 mr-2 skill-icon"></i>API Testing</li>
+                    <li class="skill-item flex items-center"><i class="fas fa-check-circle text-green-400 mr-2 skill-icon"></i>SQL</li>
+                    <li class="skill-item flex items-center"><i class="fas fa-check-circle text-green-400 mr-2 skill-icon"></i>Basic Programming (Java, Python, Shell)</li>
+                    <li class="skill-item flex items-center"><i class="fas fa-check-circle text-green-400 mr-2 skill-icon"></i>Version Control (Git)</li>
+                    <li class="skill-item flex items-center"><i class="fas fa-check-circle text-green-400 mr-2 skill-icon"></i>Test Case Creation & Scenario Design</li>
+                    <li class="skill-item flex items-center"><i class="fas fa-check-circle text-green-400 mr-2 skill-icon"></i>Bug Reporting & Defect Tracking</li>
+                    <li class="skill-item flex items-center"><i class="fas fa-check-circle text-green-400 mr-2 skill-icon"></i>Severity and Priority Assessment</li>
+                    <li class="skill-item flex items-center"><i class="fas fa-check-circle text-green-400 mr-2 skill-icon"></i>Test Documentation</li>
+                </ul>
+            </div>
 
-     <div class="section">
-  <h2>📂 Projects</h2>
+            <!-- Tools/Software -->
+            <div class="card p-6 rounded-xl shadow-xl">
+                <h3 class="text-2xl font-semibold text-white mb-4 flex items-center"><i class="fas fa-tools text-blue-400 mr-3"></i>Tools/Software</h3>
+                <ul class="space-y-3 text-gray-300">
+                    <li class="skill-item flex items-center"><i class="fas fa-cogs text-yellow-400 mr-2 skill-icon"></i>Selenium</li>
+                    <li class="skill-item flex items-center"><i class="fas fa-cogs text-yellow-400 mr-2 skill-icon"></i>JMeter</li>
+                    <li class="skill-item flex items-center"><i class="fas fa-cogs text-yellow-400 mr-2 skill-icon"></i>Postman</li>
+                    <li class="skill-item flex items-center"><i class="fas fa-cogs text-yellow-400 mr-2 skill-icon"></i>Git</li>
+                    <li class="skill-item flex items-center"><i class="fas fa-cogs text-yellow-400 mr-2 skill-icon"></i>OS (Mac, Windows, Linux)</li>
+                    <li class="skill-item flex items-center"><i class="fas fa-cogs text-yellow-400 mr-2 skill-icon"></i>Jira (implied from experience)</li>
+                    <li class="skill-item flex items-center"><i class="fas fa-cogs text-yellow-400 mr-2 skill-icon"></i>TestNG (implied from projects)</li>
+                    <li class="skill-item flex items-center"><i class="fas fa-cogs text-yellow-400 mr-2 skill-icon"></i>Maven (implied from projects)</li>
+                </ul>
+            </div>
 
-  <h3>Manual Testing Project – Pestrashop</h3>
-  <ul>
-    <li>Designed and executed test cases covering functional, UI, and usability aspects.</li>
-    <li>Identified, categorized, and reported bugs based on severity and priority.</li>
-    <li>Analyzed defect distribution and created detailed test reports.</li>
-    <li>Performed cross-module testing across product selection, user authentication, and payment workflows.</li>
-  </ul>
+            <!-- Soft Skills & Languages -->
+            <div class="card p-6 rounded-xl shadow-xl">
+                <h3 class="text-2xl font-semibold text-white mb-4 flex items-center"><i class="fas fa-users text-green-400 mr-3"></i>Soft Skills & Languages</h3>
+                <ul class="space-y-3 text-gray-300 mb-6">
+                    <li class="skill-item flex items-center"><i class="fas fa-lightbulb text-orange-400 mr-2 skill-icon"></i>Problem-Solving</li>
+                    <li class="skill-item flex items-center"><i class="fas fa-comments text-orange-400 mr-2 skill-icon"></i>Communication Skill</li>
+                    <li class="skill-item flex items-center"><i class="fas fa-eye text-orange-400 mr-2 skill-icon"></i>Observation Skill</li>
+                    <li class="skill-item flex items-center"><i class="fas fa-chart-line text-orange-400 mr-2 skill-icon"></i>Analytical Skill</li>
+                </ul>
+                <h3 class="text-2xl font-semibold text-white mb-4 flex items-center"><i class="fas fa-globe text-pink-400 mr-3"></i>Languages</h3>
+                <ul class="space-y-3 text-gray-300">
+                    <li class="skill-item flex items-center"><i class="fas fa-language text-cyan-400 mr-2 skill-icon"></i>English (Proficient)</li>
+                    <li class="skill-item flex items-center"><i class="fas fa-language text-cyan-400 mr-2 skill-icon"></i>Hindi (Reading & Writing)</li>
+                    <li class="skill-item flex items-center"><i class="fas fa-language text-cyan-400 mr-2 skill-icon"></i>Malayalam (Fluent)</li>
+                </ul>
+            </div>
+        </div>
+    </section>
 
-  <h3>Automation Testing Project – Tool Shop</h3>
-  <ul>
-    <li>Automated core e-commerce functionalities like product browsing, add-to-cart, and checkout using Selenium.</li>
-    <li>Implemented data-driven testing with TestNG to validate multiple user scenarios.</li>
-    <li>Used Maven for dependency management and streamlined test executions.</li>
-    <li>Improved project scalability and maintainability with structured test design.</li>
-  </ul>
+    <!-- Education & Certifications Section -->
+    <section id="education" class="fade-in-section container mx-auto px-4 py-16">
+        <h2 class="text-4xl font-bold text-center mb-12 text-white">Education & Certifications</h2>
+        <div class="grid md:grid-cols-2 gap-10">
+            <!-- Education -->
+            <div class="card p-6 rounded-xl shadow-xl">
+                <h3 class="text-2xl font-semibold text-white mb-4 flex items-center"><i class="fas fa-graduation-cap text-purple-400 mr-3"></i>Education</h3>
+                <div class="mb-4">
+                    <p class="text-xl font-medium text-gray-200">BTech in Electronics and Communications Engineering</p>
+                    <p class="text-lg text-gray-400">MES College of Engineering, Kuttipuram</p>
+                    <p class="text-md text-gray-500">Aug 2017 - Jun 2021</p>
+                </div>
+            </div>
 
-  <h3>Other Mini Projects</h3>
-  <ul>
-    <li>Automated login testing using Selenium and Java.</li>
-    <li>API testing using Postman.</li>
-    <li>Performance testing using JMeter.</li>
-    <li>Bug simulation and defect reporting using JIRA.</li>
-  </ul>
-</div>
+            <!-- Certifications -->
+            <div class="card p-6 rounded-xl shadow-xl">
+                <h3 class="text-2xl font-semibold text-white mb-4 flex items-center"><i class="fas fa-certificate text-teal-400 mr-3"></i>Certifications / Short Courses</h3>
+                <ul class="list-disc list-inside space-y-3 text-gray-300">
+                    <li>Complete Python Developer Zero to Mastery (Udemy)</li>
+                    <li>Bootcamp on Basics of Python and Java Programming (Bridgelabz)</li>
+                </ul>
+            </div>
+        </div>
+    </section>
 
+    <!-- Contact Section -->
+    <section id="contact" class="fade-in-section container mx-auto px-4 py-16">
+        <h2 class="text-4xl font-bold text-center mb-12 text-white">Get in Touch</h2>
+        <div class="max-w-3xl mx-auto card p-8 rounded-xl shadow-xl text-center">
+            <p class="text-lg text-gray-300 mb-6">
+                I'm always open to new opportunities and collaborations. Feel free to reach out!
+            </p>
+            <div class="space-y-4 mb-8">
+                <p class="flex items-center justify-center text-xl text-gray-200">
+                    <i class="fas fa-envelope text-purple-400 mr-3"></i>
+                    <a href="mailto:ayshashamli1999@gmail.com" class="hover:underline">ayshashamli1999@gmail.com</a>
+                </p>
+                <p class="flex items-center justify-center text-xl text-gray-200">
+                    <i class="fas fa-phone text-purple-400 mr-3"></i>
+                    <a href="tel:+918075422828" class="hover:underline">+91-8075422828</a>
+                </p>
+                <p class="flex items-center justify-center text-xl text-gray-200">
+                    <i class="fas fa-map-marker-alt text-purple-400 mr-3"></i>
+                    Electronic City, Bangalore
+                </p>
+            </div>
+            <div class="flex justify-center space-x-6 text-3xl">
+                <a href="https://www.linkedin.com/in/aysha-shamli" target="_blank" class="text-gray-400 hover:text-blue-500 transition-colors duration-300" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/Aysha-shamli/" target="_blank" class="text-gray-400 hover:text-gray-100 transition-colors duration-300" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://aysha-shamli.github.io/" target="_blank" class="text-gray-400 hover:text-green-400 transition-colors duration-300" aria-label="Personal Website"><i class="fas fa-globe"></i></a>
+                <a href="https://shamli.gitbook.io/" target="_blank" class="text-gray-400 hover:text-blue-300 transition-colors duration-300" aria-label="GitBook"><i class="fas fa-book"></i></a>
+            </div>
+        </div>
+    </section>
 
-      <div class="section">
-        <h2>📬 Contact</h2>
-        <p>Email: ayshashamli1999@gmail.com</p>
-        <p>LinkedIn: <a href="https://linkedin.com/in/ayshashamli" target="_blank">linkedin.com/in/ayshashamli</a></p>
-        <p>Location: Open to Remote / Bangalore opportunities</p>
-      </div>
+    <!-- Footer -->
+    <footer class="bg-gray-900 bg-opacity-70 backdrop-blur-md p-6 text-center text-gray-400 text-sm rounded-t-xl mt-12">
+        <p>&copy; <span id="current-year"></span> Aysha Shamli. All rights reserved.</p>
+        <p class="mt-2">Designed with <span class="text-red-500">&hearts;</span> and code.</p>
+    </footer>
 
-    </div>
-  </div>
+    <script>
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
 
-  <footer>
-    © 2025 Aysha Shamli
-  </footer>
+        // Intersection Observer for fade-in sections
+        const fadeInSections = document.querySelectorAll('.fade-in-section');
 
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target); // Stop observing once visible
+                }
+            });
+        }, observerOptions);
+
+        fadeInSections.forEach(section => {
+            observer.observe(section);
+        });
+
+        // Simple smooth scrolling for navigation links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
 </body>
 </html>

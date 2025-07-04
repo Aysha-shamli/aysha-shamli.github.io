@@ -201,8 +201,7 @@
             font-size: 1.5rem;
             font-weight: 300;
             margin-top: 1rem;
-            opacity: 0;
-            /* Animation handled by JS for typing effect */
+            /* Initial opacity handled by inline style and JS for typing effect */
         }
 
         .hero-description {
@@ -211,8 +210,7 @@
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
-            opacity: 0; /* Initial opacity for typing effect */
-            /* Animation handled by JS for typing effect */
+            /* Initial opacity handled by inline style and JS for typing effect */
         }
 
         /* Fade-in animation for sections */
@@ -377,9 +375,11 @@
     <section id="hero" class="hero-section text-white relative">
         <canvas id="threejs-canvas"></canvas> <div class="hero-content">
             <h1 class="hero-title">Hello, I'm Aysha Shamli</h1>
-            <p class="hero-subtitle"><span id="typing-text"></span></p>
+            <p class="hero-subtitle">
+                <span id="typing-text" style="opacity: 0;">QA Engineer | AI Trainer | Innovator</span>
+            </p>
             <p class="hero-description mt-6 text-lg text-gray-300 leading-relaxed">
-                <span id="description-typing-text"></span>
+                <span id="description-typing-text" style="opacity: 0;">A BTech graduate with 1 year of hands-on experience in manual software testing and a background as a freelance AI Trainer. I'm passionate about ensuring quality in web and API applications and optimizing language models.</span>
             </p>
             <div class="mt-8 space-x-4">
                 <a href="#contact" class="btn-primary inline-block px-8 py-3 rounded-full font-semibold text-white shadow-lg">Get in Touch</a>
@@ -740,49 +740,39 @@
         // Typing effect for Hero Section
         const typingTextElement = document.getElementById('typing-text');
         const descriptionTypingTextElement = document.getElementById('description-typing-text');
-        const phrases = ["A Quality Assurance Engineer.", "An AI Trainer.", "Passionate about building robust software."];
-        let phraseIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
+        
+        // Get the full text content from the HTML initially
+        const subtitleText = typingTextElement.textContent;
+        const descriptionText = descriptionTypingTextElement.textContent;
+
+        let subtitleCharIndex = 0;
+        let descriptionCharIndex = 0;
         const typingSpeed = 70;
-        const deletingSpeed = 40;
-        const pauseBetweenPhrases = 1500;
-        const descriptionText = "With a strong foundation in manual testing and a keen eye for detail, I ensure software excellence. My experience as an AI Trainer further sharpens my analytical skills, allowing me to contribute to high-quality and reliable systems.";
+        const descriptionTypingSpeed = 30; // Slightly faster for description
 
-        function typeEffect() {
-            const currentPhrase = phrases[phraseIndex];
-            if (isDeleting) {
-                typingTextElement.textContent = currentPhrase.substring(0, charIndex--);
+        // Clear the visible text content so it can be "typed" in
+        typingTextElement.textContent = '';
+        descriptionTypingTextElement.textContent = '';
+
+        function typeSubtitle() {
+            if (subtitleCharIndex < subtitleText.length) {
+                typingTextElement.style.opacity = 1; // Ensure element is visible
+                typingTextElement.textContent += subtitleText.charAt(subtitleCharIndex);
+                subtitleCharIndex++;
+                setTimeout(typeSubtitle, typingSpeed);
             } else {
-                typingTextElement.textContent = currentPhrase.substring(0, charIndex++);
+                // Once subtitle is typed, start description after a short delay
+                setTimeout(typeDescription, 1000); // Delay before description starts
             }
-
-            let typeSpeed = typingSpeed;
-            if (isDeleting) typeSpeed = deletingSpeed;
-
-            if (!isDeleting && charIndex === currentPhrase.length + 1) {
-                typeSpeed = pauseBetweenPhrases;
-                isDeleting = true;
-            } else if (isDeleting && charIndex < 0) {
-                isDeleting = false;
-                phraseIndex = (phraseIndex + 1) % phrases.length;
-                charIndex = 0;
-            }
-
-            setTimeout(typeEffect, typeSpeed);
         }
 
         function typeDescription() {
-            let i = 0;
-            descriptionTypingTextElement.style.opacity = 1; // Make description visible
-            const interval = setInterval(() => {
-                if (i < descriptionText.length) {
-                    descriptionTypingTextElement.textContent += descriptionText.charAt(i);
-                    i++;
-                } else {
-                    clearInterval(interval);
-                }
-            }, 30); // Adjust typing speed here
+            if (descriptionCharIndex < descriptionText.length) {
+                descriptionTypingTextElement.style.opacity = 1; // Ensure element is visible
+                descriptionTypingTextElement.textContent += descriptionText.charAt(descriptionCharIndex);
+                descriptionCharIndex++;
+                setTimeout(typeDescription, descriptionTypingSpeed);
+            }
         }
 
         // Intersection Observer for fade-in sections
@@ -818,8 +808,7 @@
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     setTimeout(() => {
-                        typeEffect(); // Start typing effect for subtitle
-                        setTimeout(typeDescription, 1500); // Start typing effect for description after a delay
+                        typeSubtitle(); // Start typing effect for subtitle
                     }, 500); // Small delay after hero title fades in
                     observer.unobserve(entry.target);
                 }

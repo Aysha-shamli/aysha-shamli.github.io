@@ -1,652 +1,440 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aysha Shamli - Ultra Modern Portfolio</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        /* Custom CSS for animations and thematic elements */
-        body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #0a0a0a, #1a1a2e, #0a0a0a); /* Dark, space-like gradient */
-            color: #e0e0e0;
-            overflow-x: hidden; /* Prevent horizontal scroll */
-        }
+import React, { useState, useEffect } from 'react';
 
-        /* Starfield background */
-        .starfield {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-            background: transparent;
-        }
+// Main App Component
+const App = () => {
+    const [activeSection, setActiveSection] = useState('home');
 
-        /* Generate stars using box-shadow */
-        .starfield::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: transparent;
-            box-shadow:
-                /* Small stars */
-                0 0 0 1px rgba(255, 255, 255, 0.5),
-                /* Medium stars */
-                -100px 50px 0 2px rgba(255, 255, 255, 0.7),
-                150px -80px 0 1px rgba(255, 255, 255, 0.6),
-                -200px -120px 0 2px rgba(255, 255, 255, 0.8),
-                250px 180px 0 1px rgba(255, 255, 255, 0.5),
-                /* Large stars */
-                -300px 250px 0 3px rgba(255, 255, 255, 0.9),
-                350px -200px 0 2px rgba(255, 255, 255, 0.7),
-                -400px -300px 0 1px rgba(255, 255, 255, 0.6),
-                450px 320px 0 3px rgba(255, 255, 255, 0.9),
-                -500px 100px 0 2px rgba(255, 255, 255, 0.8),
-                550px -150px 0 1px rgba(255, 255, 255, 0.5),
-                -600px -250px 0 3px rgba(255, 255, 255, 0.9),
-                650px 70px 0 2px rgba(255, 255, 255, 0.7),
-                -700px 190px 0 1px rgba(255, 255, 255, 0.6),
-                750px -300px 0 3px rgba(255, 255, 255, 0.9),
-                /* Add more stars for density */
-                800px 50px 0 1px rgba(255, 255, 255, 0.5),
-                -850px -100px 0 2px rgba(255, 255, 255, 0.7),
-                900px 200px 0 1px rgba(255, 255, 255, 0.6),
-                -950px -180px 0 2px rgba(255, 255, 255, 0.8),
-                1000px 250px 0 1px rgba(255, 255, 255, 0.5),
-                -1050px -220px 0 3px rgba(255, 255, 255, 0.9),
-                1100px 150px 0 2px rgba(255, 255, 255, 0.7),
-                -1150px -70px 0 1px rgba(255, 255, 255, 0.6),
-                1200px 300px 0 3px rgba(255, 255, 255, 0.9),
-                -1250px 80px 0 2px rgba(255, 255, 255, 0.8),
-                1300px -250px 0 1px rgba(255, 255, 255, 0.5),
-                -1350px 120px 0 3px rgba(255, 255, 255, 0.9),
-                1400px -10px 0 2px rgba(255, 255, 255, 0.7),
-                -1450px 280px 0 1px rgba(255, 255, 255, 0.6),
-                1500px -190px 0 3px rgba(255, 255, 255, 0.9);
-            animation: animateStars 50s linear infinite;
+    const scrollToSection = (id) => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+            setActiveSection(id);
         }
+    };
 
-        @keyframes animateStars {
-            from {
-                transform: translateY(0);
+    useEffect(() => {
+        const handleScroll = () => {
+            const sections = ['home', 'about', 'skills', 'experience', 'projects', 'contact'];
+            let currentActive = 'home';
+            for (let i = sections.length - 1; i >= 0; i--) {
+                const section = document.getElementById(sections[i]);
+                if (section) {
+                    const rect = section.getBoundingClientRect();
+                    if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+                        currentActive = sections[i];
+                        break;
+                    }
+                }
             }
-            to {
-                transform: translateY(-2000px); /* Adjust for star density and speed */
-            }
-        }
-
-        /* Abstract shapes for forest/tech blend */
-        .abstract-shape-1 {
-            position: absolute;
-            top: 10%;
-            left: -5%;
-            width: 300px;
-            height: 300px;
-            background: linear-gradient(45deg, #3a0ca3, #4361ee); /* Deep blue/purple */
-            border-radius: 50% 20% 50% 30%;
-            filter: blur(80px);
-            opacity: 0.3;
-            animation: floatShape 15s ease-in-out infinite alternate;
-            z-index: -1;
-        }
-
-        .abstract-shape-2 {
-            position: absolute;
-            bottom: 5%;
-            right: -10%;
-            width: 400px;
-            height: 400px;
-            background: linear-gradient(135deg, #2a9d8f, #264653); /* Forest green/dark teal */
-            border-radius: 30% 50% 20% 50%;
-            filter: blur(90px);
-            opacity: 0.25;
-            animation: floatShape 18s ease-in-out infinite alternate-reverse;
-            z-index: -1;
-        }
-
-        @keyframes floatShape {
-            0% {
-                transform: translate(0, 0) rotate(0deg);
-            }
-            50% {
-                transform: translate(20px, 30px) rotate(5deg);
-            }
-            100% {
-                transform: translate(0, 0) rotate(0deg);
-            }
-        }
-
-        /* Planet animation */
-        .planet-1 {
-            position: absolute;
-            width: 150px;
-            height: 150px;
-            background: radial-gradient(circle at 30% 30%, #a78bfa, #6366f1, #3a0ca3); /* Purple-blue gradient */
-            border-radius: 50%;
-            filter: blur(5px);
-            opacity: 0.7;
-            top: 20%;
-            left: -10%;
-            animation: movePlanet 60s linear infinite;
-            z-index: -1;
-        }
-
-        @keyframes movePlanet {
-            0% {
-                transform: translate(0, 0) scale(0.8);
-                opacity: 0.7;
-            }
-            25% {
-                transform: translate(20vw, 15vh) scale(0.9);
-                opacity: 0.8;
-            }
-            50% {
-                transform: translate(50vw, 30vh) scale(1);
-                opacity: 0.9;
-            }
-            75% {
-                transform: translate(80vw, 15vh) scale(0.9);
-                opacity: 0.8;
-            }
-            100% {
-                transform: translate(100vw, 0) scale(0.8);
-                opacity: 0.7;
-            }
-        }
-
-        /* Rocket animation */
-        .rocket-1 {
-            position: absolute;
-            width: 20px;
-            height: 60px;
-            background-color: #f87171; /* Red */
-            clip-path: polygon(50% 0%, 0% 100%, 100% 100%); /* Triangle for rocket top */
-            transform: rotate(45deg); /* Initial angle */
-            top: 90%;
-            left: -5%;
-            animation: launchRocket 10s linear infinite;
-            z-index: -1;
-        }
-
-        .rocket-1::after {
-            content: '';
-            position: absolute;
-            bottom: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 10px;
-            height: 30px;
-            background: linear-gradient(to bottom, orange, transparent);
-            filter: blur(5px);
-            animation: rocketFlame 0.5s infinite alternate;
-        }
-
-        @keyframes launchRocket {
-            0% {
-                transform: translate(0, 0) rotate(45deg);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            100% {
-                transform: translate(110vw, -100vh) rotate(45deg);
-                opacity: 0;
-            }
-        }
-
-        @keyframes rocketFlame {
-            from {
-                transform: translateX(-50%) scaleY(1);
-                opacity: 1;
-            }
-            to {
-                transform: translateX(-50%) scaleY(1.2);
-                opacity: 0.8;
-            }
-        }
-
-
-        /* General section styling */
-        section {
-            padding: 4rem 0;
-            position: relative;
-            z-index: 1; /* Ensure content is above background animations */
-        }
-
-        /* Hero section specific styles */
-        .hero-section {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-content {
-            z-index: 10;
-            max-width: 800px;
-            padding: 1rem;
-        }
-
-        .hero-title {
-            font-size: 3.5rem;
-            line-height: 1.1;
-            font-weight: 700;
-            background: linear-gradient(90deg, #a78bfa, #8b5cf6, #6366f1); /* Purple to blue gradient */
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: fadeInScale 1.5s ease-out forwards;
-        }
-
-        .hero-subtitle {
-            font-size: 1.5rem;
-            font-weight: 300;
-            margin-top: 1rem;
-            opacity: 0;
-            animation: fadeIn 2s ease-out 0.5s forwards;
-        }
-
-        .hero-description {
-            font-size: 1.1rem;
-            margin-top: 1.5rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            opacity: 0;
-            animation: fadeIn 2s ease-out 1s forwards;
-        }
-
-        /* Fade-in animation for sections */
-        .fade-in-section {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-
-        .fade-in-section.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Card styles */
-        .card {
-            background-color: rgba(30, 30, 45, 0.8); /* Slightly transparent dark background */
-            backdrop-filter: blur(10px); /* Frosted glass effect */
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-        }
-
-        /* Button styles */
-        .btn-primary {
-            background: linear-gradient(90deg, #8b5cf6, #6366f1); /* Purple to blue */
-            transition: all 0.3s ease;
-        }
-
-        .btn-primary:hover {
-            background: linear-gradient(90deg, #6366f1, #8b5cf6);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(99, 102, 241, 0.4);
-        }
-
-        /* Keyframe animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes fadeInScale {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        /* Project image hover effect */
-        .project-image-container {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .project-image {
-            transition: transform 0.5s ease;
-        }
-
-        .project-image-container:hover .project-image {
-            transform: scale(1.05);
-        }
-
-        /* Skill icon animations */
-        .skill-icon {
-            transition: transform 0.3s ease;
-        }
-
-        .skill-item:hover .skill-icon {
-            transform: rotate(10deg) scale(1.1);
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2.5rem;
-            }
-            .hero-subtitle {
-                font-size: 1.2rem;
-            }
-            .hero-description {
-                font-size: 1rem;
-            }
-            section {
-                padding: 3rem 0;
-            }
-        }
-    </style>
-</head>
-<body class="antialiased">
-    <!-- Starfield and Abstract Shapes Background -->
-    <div class="starfield"></div>
-    <div class="abstract-shape-1"></div>
-    <div class="abstract-shape-2"></div>
-    <div class="planet-1"></div> <!-- New Planet element -->
-    <div class="rocket-1"></div> <!-- New Rocket element -->
-
-    <!-- Navigation Bar -->
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-gray-900 bg-opacity-70 backdrop-blur-md p-4 shadow-lg rounded-b-xl">
-        <div class="container mx-auto flex justify-between items-center px-4">
-            <a href="#" class="text-2xl font-bold text-white tracking-wider">Aysha Shamli</a>
-            <div class="space-x-4">
-                <a href="#about" class="text-gray-300 hover:text-white transition duration-300">About</a>
-                <a href="#experience" class="text-gray-300 hover:text-white transition duration-300">Experience</a>
-                <a href="#projects" class="text-gray-300 hover:text-white transition duration-300">Projects</a>
-                <a href="#skills" class="text-gray-300 hover:text-white transition duration-300">Skills</a>
-                <a href="#contact" class="text-gray-300 hover:text-white transition duration-300">Contact</a>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section id="hero" class="hero-section text-white relative">
-        <div class="hero-content">
-            <h1 class="hero-title">Hello, I'm Aysha Shamli</h1>
-            <p class="hero-subtitle">QA Engineer | AI Trainer | Innovator</p>
-            <p class="hero-description mt-6 text-lg text-gray-300 leading-relaxed">
-                A BTech graduate with 1 year of hands-on experience in manual software testing and a background as a freelance AI Trainer. I'm passionate about ensuring quality in web and API applications and optimizing language models.
-            </p>
-            <div class="mt-8 space-x-4">
-                <a href="#contact" class="btn-primary inline-block px-8 py-3 rounded-full font-semibold text-white shadow-lg">Get in Touch</a>
-                <a href="https://github.com/Aysha-shamli/" target="_blank" class="inline-block px-8 py-3 rounded-full font-semibold text-gray-300 border border-gray-600 hover:border-white hover:text-white transition duration-300">View GitHub</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="fade-in-section container mx-auto px-4 py-16">
-        <h2 class="text-4xl font-bold text-center mb-12 text-white">About Me</h2>
-        <div class="grid md:grid-cols-2 gap-12 items-center">
-            <div class="text-lg leading-relaxed text-gray-300">
-                <p class="mb-4">
-                    I am a BTech graduate in Electronics and Communication Engineering with 1 year of hands-on experience in manual software testing, along with work as a freelance AI Trainer. My journey in software testing has focused on functional testing, bug reporting, and test case execution across web and API-based applications. I've also honed my skills in designing test scenarios, severity/priority classification, and detailed defect reporting.
-                </p>
-                <p class="mb-4">
-                    As an AI Trainer, I've had the unique opportunity to contribute to prompt design and response optimization for cutting-edge language models. This role has sharpened my analytical skills, allowing me to identify patterns and anomalies in AI-generated outputs and collaborate with cross-functional teams to enhance AI performance.
-                </p>
-                <p>
-                    I am actively seeking opportunities in Quality Assurance where I can apply and expand my skills across both manual and automation testing, contributing to robust and high-quality software solutions.
-                </p>
-            </div>
-            <div class="flex justify-center">
-                <img src="https://placehold.co/400x400/1a1a2e/ffffff?text=Aysha+Shamli" alt="Aysha Shamli" class="rounded-full shadow-2xl border-4 border-purple-500 transform hover:scale-105 transition-transform duration-300">
-            </div>
-        </div>
-    </section>
-
-    <!-- Work Experience Section -->
-    <section id="experience" class="fade-in-section container mx-auto px-4 py-16">
-        <h2 class="text-4xl font-bold text-center mb-12 text-white">Work Experience</h2>
-        <div class="space-y-10">
-            <!-- Luminar Technolab -->
-            <div class="card p-8 rounded-xl shadow-xl flex flex-col md:flex-row items-start md:items-center">
-                <div class="mb-4 md:mb-0 md:mr-8 flex-shrink-0">
-                    <i class="fas fa-briefcase text-5xl text-purple-400"></i>
-                </div>
-                <div>
-                    <h3 class="text-3xl font-semibold text-white mb-2">Software Tester, Luminar Technolab</h3>
-                    <p class="text-lg text-gray-400 mb-4">Feb 2024 - May 2025</p>
-                    <ul class="list-disc list-inside space-y-2 text-gray-300">
-                        <li>Performed manual testing on web-based applications and ERP modules.</li>
-                        <li>Created detailed test cases and scenarios based on requirements and use cases.</li>
-                        <li>Executed test cases, tracked bugs, and verified fixes.</li>
-                        <li>Used tools like JIRA for bug reporting and tracking.</li>
-                        <li>Tested APIs using Postman and validated backend responses.</li>
-                        <li>Documented test reports and communicated findings to development teams.</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Outlier - AI Trainer -->
-            <div class="card p-8 rounded-xl shadow-xl flex flex-col md:flex-row items-start md:items-center">
-                <div class="mb-4 md:mb-0 md:mr-8 flex-shrink-0">
-                    <i class="fas fa-robot text-5xl text-teal-400"></i>
-                </div>
-                <div>
-                    <h3 class="text-3xl font-semibold text-white mb-2">AI Trainer, Outlier</h3>
-                    <p class="text-lg text-gray-400 mb-4">March 2024 - Present</p>
-                    <ul class="list-disc list-inside space-y-2 text-gray-300">
-                        <li>Designed and refined effective prompts for AI language models to generate accurate and relevant responses.</li>
-                        <li>Analyzed AI-generated outputs to assess accuracy, quality, and relevance, making necessary improvements.</li>
-                        <li>Conducted iterative testing and incorporated feedback to enhance prompt effectiveness.</li>
-                        <li>Identified patterns and anomalies in AI responses using strong analytical skills.</li>
-                        <li>Collaborated with cross-functional teams to optimize AI performance and improve user experience.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="fade-in-section container mx-auto px-4 py-16">
-        <h2 class="text-4xl font-bold text-center mb-12 text-white">My Projects</h2>
-        <div class="grid md:grid-cols-2 gap-10">
-            <!-- Pestrashop Project -->
-            <div class="card p-6 rounded-xl shadow-xl">
-                <div class="project-image-container rounded-lg overflow-hidden mb-6">
-                    <img src="https://placehold.co/600x400/2a9d8f/ffffff?text=Pestrashop+Manual+Testing" alt="Pestrashop Project" class="w-full h-auto rounded-lg project-image">
-                </div>
-                <h3 class="text-2xl font-semibold text-white mb-3">Manual Project - Pestrashop</h3>
-                <p class="text-gray-300 mb-4 leading-relaxed">
-                    A comprehensive manual testing project focusing on a web-based e-commerce application.
-                </p>
-                <ul class="list-disc list-inside space-y-2 text-gray-400">
-                    <li><strong>Test Case Design & Execution:</strong> Created and executed detailed test cases covering functional, UI, and usability testing.</li>
-                    <li><strong>Bug Reporting & Defect Tracking:</strong> Identified, documented, and reported defects, categorizing them based on severity and priority.</li>
-                    <li><strong>Defect Analysis & Test Reports:</strong> Analyzed defect distribution and prepared comprehensive test reports.</li>
-                    <li><strong>Cross-Module Testing:</strong> Ensured seamless functionality and integration across different sections like product selection, user authentication, and payment processing.</li>
-                </ul>
-            </div>
-
-            <!-- Tool Shop Project -->
-            <div class="card p-6 rounded-xl shadow-xl">
-                <div class="project-image-container rounded-lg overflow-hidden mb-6">
-                    <img src="https://placehold.co/600x400/4361ee/ffffff?text=Tool+Shop+Automation" alt="Tool Shop Project" class="w-full h-auto rounded-lg project-image">
-                </div>
-                <h3 class="text-2xl font-semibold text-white mb-3">Automation Project - Tool Shop</h3>
-                <p class="text-gray-300 mb-4 leading-relaxed">
-                    An automation testing initiative for e-commerce functionalities, leveraging modern testing frameworks.
-                </p>
-                <ul class="list-disc list-inside space-y-2 text-gray-400">
-                    <li>Executed automated tests for e-commerce functionalities, including product browsing, add-to-cart, and checkout.</li>
-                    <li><strong>Data-Driven Testing:</strong> Implemented data-driven testing using Selenium and TestNG, ensuring comprehensive test coverage across diverse user scenarios and data sets.</li>
-                    <li><strong>Maven-Driven Test Execution & Dependency Management:</strong> Utilized Maven for efficient dependency management and streamlined test execution, enhancing project maintainability and scalability.</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="fade-in-section container mx-auto px-4 py-16">
-        <h2 class="text-4xl font-bold text-center mb-12 text-white">My Skills</h2>
-        <div class="grid md:grid-cols-3 gap-8">
-            <!-- Technical Skills -->
-            <div class="card p-6 rounded-xl shadow-xl">
-                <h3 class="text-2xl font-semibold text-white mb-4 flex items-center"><i class="fas fa-code text-purple-400 mr-3"></i>Technical Skills</h3>
-                <ul class="space-y-3 text-gray-300">
-                    <li class="skill-item flex items-center"><i class="fas fa-check-circle text-green-400 mr-2 skill-icon"></i>Functional Testing</li>
-                    <li class="skill-item flex items-center"><i class="fas fa-check-circle text-green-400 mr-2 skill-icon"></i>Manual Testing</li>
-                    <li class="skill-item flex items-center"><i class="fas fa-check-circle text-green-400 mr-2 skill-icon"></i>Automation Testing</li>
-                    <li class="skill-item flex items-center"><i class="fas fa-check-circle text-green-400 mr-2 skill-icon"></i>API Testing</li>
-                    <li class="skill-item flex items-center"><i class="fas fa-check-circle text-green-400 mr-2 skill-icon"></i>SQL</li>
-                    <li class="skill-item flex items-center"><i class="fas fa-check-circle text-green-400 mr-2 skill-icon"></i>Basic Programming (Java, Python, Shell)</li>
-                    <li class="skill-item flex items-center"><i class="fas fa-check-circle text-green-400 mr-2 skill-icon"></i>Version Control (Git)</li>
-                    <li class="skill-item flex items-center"><i class="fas fa-check-circle text-green-400 mr-2 skill-icon"></i>Test Case Creation & Scenario Design</li>
-                    <li class="skill-item flex items-center"><i class="fas fa-check-circle text-green-400 mr-2 skill-icon"></i>Bug Reporting & Defect Tracking</li>
-                    <li class="skill-item flex items-center"><i class="fas fa-check-circle text-green-400 mr-2 skill-icon"></i>Severity and Priority Assessment</li>
-                    <li class="skill-item flex items-center"><i class="fas fa-check-circle text-green-400 mr-2 skill-icon"></i>Test Documentation</li>
-                </ul>
-            </div>
-
-            <!-- Tools/Software -->
-            <div class="card p-6 rounded-xl shadow-xl">
-                <h3 class="text-2xl font-semibold text-white mb-4 flex items-center"><i class="fas fa-tools text-blue-400 mr-3"></i>Tools/Software</h3>
-                <ul class="space-y-3 text-gray-300">
-                    <li class="skill-item flex items-center"><i class="fas fa-cogs text-yellow-400 mr-2 skill-icon"></i>Selenium</li>
-                    <li class="skill-item flex items-center"><i class="fas fa-cogs text-yellow-400 mr-2 skill-icon"></i>JMeter</li>
-                    <li class="skill-item flex items-center"><i class="fas fa-cogs text-yellow-400 mr-2 skill-icon"></i>Postman</li>
-                    <li class="skill-item flex items-center"><i class="fas fa-cogs text-yellow-400 mr-2 skill-icon"></i>Git</li>
-                    <li class="skill-item flex items-center"><i class="fas fa-cogs text-yellow-400 mr-2 skill-icon"></i>OS (Mac, Windows, Linux)</li>
-                    <li class="skill-item flex items-center"><i class="fas fa-cogs text-yellow-400 mr-2 skill-icon"></i>Jira (implied from experience)</li>
-                    <li class="skill-item flex items-center"><i class="fas fa-cogs text-yellow-400 mr-2 skill-icon"></i>TestNG (implied from projects)</li>
-                    <li class="skill-item flex items-center"><i class="fas fa-cogs text-yellow-400 mr-2 skill-icon"></i>Maven (implied from projects)</li>
-                </ul>
-            </div>
-
-            <!-- Soft Skills & Languages -->
-            <div class="card p-6 rounded-xl shadow-xl">
-                <h3 class="text-2xl font-semibold text-white mb-4 flex items-center"><i class="fas fa-users text-green-400 mr-3"></i>Soft Skills & Languages</h3>
-                <ul class="space-y-3 text-gray-300 mb-6">
-                    <li class="skill-item flex items-center"><i class="fas fa-lightbulb text-orange-400 mr-2 skill-icon"></i>Problem-Solving</li>
-                    <li class="skill-item flex items-center"><i class="fas fa-comments text-orange-400 mr-2 skill-icon"></i>Communication Skill</li>
-                    <li class="skill-item flex items-center"><i class="fas fa-eye text-orange-400 mr-2 skill-icon"></i>Observation Skill</li>
-                    <li class="skill-item flex items-center"><i class="fas fa-chart-line text-orange-400 mr-2 skill-icon"></i>Analytical Skill</li>
-                </ul>
-                <h3 class="text-2xl font-semibold text-white mb-4 flex items-center"><i class="fas fa-globe text-pink-400 mr-3"></i>Languages</h3>
-                <ul class="space-y-3 text-gray-300">
-                    <li class="skill-item flex items-center"><i class="fas fa-language text-cyan-400 mr-2 skill-icon"></i>English (Proficient)</li>
-                    <li class="skill-item flex items-center"><i class="fas fa-language text-cyan-400 mr-2 skill-icon"></i>Hindi (Reading & Writing)</li>
-                    <li class="skill-item flex items-center"><i class="fas fa-language text-cyan-400 mr-2 skill-icon"></i>Malayalam (Fluent)</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- Education & Certifications Section -->
-    <section id="education" class="fade-in-section container mx-auto px-4 py-16">
-        <h2 class="text-4xl font-bold text-center mb-12 text-white">Education & Certifications</h2>
-        <div class="grid md:grid-cols-2 gap-10">
-            <!-- Education -->
-            <div class="card p-6 rounded-xl shadow-xl">
-                <h3 class="text-2xl font-semibold text-white mb-4 flex items-center"><i class="fas fa-graduation-cap text-purple-400 mr-3"></i>Education</h3>
-                <div class="mb-4">
-                    <p class="text-xl font-medium text-gray-200">BTech in Electronics and Communications Engineering</p>
-                    <p class="text-lg text-gray-400">MES College of Engineering, Kuttipuram</p>
-                    <p class="text-md text-gray-500">Aug 2017 - Jun 2021</p>
-                </div>
-            </div>
-
-            <!-- Certifications -->
-            <div class="card p-6 rounded-xl shadow-xl">
-                <h3 class="text-2xl font-semibold text-white mb-4 flex items-center"><i class="fas fa-certificate text-teal-400 mr-3"></i>Certifications / Short Courses</h3>
-                <ul class="list-disc list-inside space-y-3 text-gray-300">
-                    <li>Complete Python Developer Zero to Mastery (Udemy)</li>
-                    <li>Bootcamp on Basics of Python and Java Programming (Bridgelabz)</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="fade-in-section container mx-auto px-4 py-16">
-        <h2 class="text-4xl font-bold text-center mb-12 text-white">Get in Touch</h2>
-        <div class="max-w-3xl mx-auto card p-8 rounded-xl shadow-xl text-center">
-            <p class="text-lg text-gray-300 mb-6">
-                I'm always open to new opportunities and collaborations. Feel free to reach out!
-            </p>
-            <div class="space-y-4 mb-8">
-                <p class="flex items-center justify-center text-xl text-gray-200">
-                    <i class="fas fa-envelope text-purple-400 mr-3"></i>
-                    <a href="mailto:ayshashamli1999@gmail.com" class="hover:underline">ayshashamli1999@gmail.com</a>
-                </p>
-                <!-- Removed mobile number line -->
-                <p class="flex items-center justify-center text-xl text-gray-200">
-                    <i class="fas fa-map-marker-alt text-purple-400 mr-3"></i>
-                    Electronic City, Bangalore
-                </p>
-            </div>
-            <div class="flex justify-center space-x-6 text-3xl">
-                <a href="https://www.linkedin.com/in/aysha-shamli" target="_blank" class="text-gray-400 hover:text-blue-500 transition-colors duration-300" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                <a href="https://github.com/Aysha-shamli/" target="_blank" class="text-gray-400 hover:text-gray-100 transition-colors duration-300" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                <a href="https://aysha-shamli.github.io/" target="_blank" class="text-gray-400 hover:text-green-400 transition-colors duration-300" aria-label="Personal Website"><i class="fas fa-globe"></i></a>
-                <a href="https://shamli.gitbook.io/" target="_blank" class="text-gray-400 hover:text-blue-300 transition-colors duration-300" aria-label="GitBook"><i class="fas fa-book"></i></a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-gray-900 bg-opacity-70 backdrop-blur-md p-6 text-center text-gray-400 text-sm rounded-t-xl mt-12">
-        <p>&copy; <span id="current-year"></span> Aysha Shamli. All rights reserved.</p>
-        <p class="mt-2">Designed with <span class="text-red-500">&hearts;</span> and code.</p>
-    </footer>
-
-    <script>
-        // Set current year in footer
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-
-        // Intersection Observer for fade-in sections
-        const fadeInSections = document.querySelectorAll('.fade-in-section');
-
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
+            setActiveSection(currentActive);
         };
 
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                    observer.unobserve(entry.target); // Stop observing once visible
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    return (
+        <div className="min-h-screen bg-gradient-to-br from-gray-950 to-black font-inter text-blue-200 overflow-x-hidden relative">
+            {/* Animated Background Overlay (mimics code/data flow) */}
+            <div className="absolute inset-0 z-0 opacity-10 animate-code-flow">
+                <div className="absolute inset-0 bg-repeat" style={{ backgroundImage: "url('https://placehold.co/200x200/0A0A0A/00FFFF?text=CODE')", backgroundSize: '200px', animation: 'bg-scroll 60s linear infinite' }}></div>
+            </div>
+
+            {/* Navigation Bar */}
+            <nav className="fixed top-0 left-0 right-0 z-50 bg-gray-950 bg-opacity-80 shadow-lg shadow-blue-800/50 backdrop-blur-md p-4 rounded-b-3xl transform transition-all duration-500 ease-in-out border-b-2 border-blue-700">
+                <div className="container mx-auto flex justify-between items-center">
+                    <h1 className="text-3xl font-extrabold text-purple-400 drop-shadow-glow animate-fade-in-down">Aysha Shamli</h1>
+                    <div className="flex space-x-4 md:space-x-6">
+                        <NavItem title="Home" sectionId="home" activeSection={activeSection} onClick={scrollToSection} />
+                        <NavItem title="About" sectionId="about" activeSection={activeSection} onClick={scrollToSection} />
+                        <NavItem title="Skills" sectionId="skills" activeSection={activeSection} onClick={scrollToSection} />
+                        <NavItem title="Experience" sectionId="experience" activeSection={activeSection} onClick={scrollToSection} />
+                        <NavItem title="Projects" sectionId="projects" activeSection={activeSection} onClick={scrollToSection} />
+                        <NavItem title="Contact" sectionId="contact" activeSection={activeSection} onClick={scrollToSection} />
+                    </div>
+                </div>
+            </nav>
+
+            {/* Hero Section */}
+            <section id="home" className="relative flex items-center justify-center min-h-screen bg-cover bg-center overflow-hidden" style={{ backgroundImage: "url('Screenshot 2025-07-04 at 9.46.04 AM.jpg-2980cd71-8907-46b5-b466-117e95bc3981')" }}>
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent opacity-90"></div>
+                {/* Animated Circuit/Data Lines */}
+                <div className="absolute inset-0 w-full h-full pointer-events-none">
+                    <CircuitLine className="top-[10%] left-[5%] w-48 h-auto opacity-70 animate-data-flow-1" />
+                    <CircuitLine className="bottom-[15%] right-[8%] w-56 h-auto opacity-70 animate-data-flow-2" />
+                    <CircuitLine className="top-[40%] left-[25%] w-40 h-auto opacity-70 animate-data-flow-3" />
+                    <CircuitLine className="top-[5%] right-[20%] w-32 h-auto opacity-60 animate-data-flow-4" />
+                    <CircuitLine className="bottom-[25%] left-[15%] w-44 h-auto opacity-60 animate-data-flow-5" />
+                </div>
+
+                <div className="relative z-10 text-center text-white p-8 rounded-2xl shadow-lg shadow-blue-700/50 max-w-4xl mx-auto bg-blue-900 bg-opacity-20 backdrop-blur-sm border-2 border-blue-600 animate-fade-in-up">
+                    <h2 className="text-6xl md:text-7xl font-extrabold mb-4 leading-tight drop-shadow-glow animate-text-flicker">
+                        Aysha Shamli
+                    </h2>
+                    <p className="text-2xl md:text-3xl mb-6 font-light text-purple-300 animate-text-typewriter">
+                        Quality Assurance & AI Trainer
+                    </p>
+                    <p className="text-xl mb-8 max-w-2xl mx-auto animate-text-fade-in delay-1s">
+                        Architecting Excellence in Software and AI Systems.
+                    </p>
+                    <button
+                        onClick={() => scrollToSection('contact')}
+                        className="bg-purple-700 hover:bg-purple-800 text-white font-bold py-4 px-10 rounded-full shadow-lg shadow-purple-500/50 transition duration-300 ease-in-out transform hover:scale-105 animate-button-glow border-2 border-purple-500"
+                    >
+                        Access Portfolio
+                    </button>
+                </div>
+            </section>
+
+            {/* About Me Section */}
+            <section id="about" className="py-24 px-4 bg-gray-900 relative z-10 shadow-inner-xl border-t border-b border-blue-900">
+                <div className="container mx-auto max-w-5xl">
+                    <h3 className="text-5xl font-bold text-center text-blue-400 mb-16 animate-fade-in-up drop-shadow-glow">About me</h3>
+                    <div className="flex flex-col md:flex-row items-center md:space-x-12 bg-gray-950 p-10 rounded-3xl shadow-lg shadow-blue-800/50 border border-blue-900 animate-fade-in-up delay-0.5s">
+                        <div className="md:w-1/3 mb-10 md:mb-0 transform hover:scale-105 transition-transform duration-300">
+                            <img
+                                src="https://placehold.co/350x350/1A202C/00FFFF?text=Aysha_Profile"
+                                alt="Aysha Shamli"
+                                className="rounded-full w-72 h-72 object-cover mx-auto shadow-xl shadow-blue-500/50 border-4 border-blue-600"
+                            />
+                        </div>
+                        <div className="md:w-2/3 text-xl leading-relaxed text-blue-200">
+                            <p className="mb-4">
+                                I am a BTech graduate in Electronics and Communication Engineering with real-world experience as a freelance prompt-based AI Trainer, coupled with hands-on training in software testing and automation.
+                            </p>
+                            <p className="mb-4">
+                                In my AI Trainer role, I honed my skills in prompt design, output analysis, and refining responses to improve accuracy and relevance. My training provided practical experience in testing both APIs and web applications, meticulous bug reporting, and designing robust test scenarios using industry-standard tools like Selenium, Postman, and JMeter.
+                            </p>
+                            <p>
+                                With a keen eye for detail and a preference for structured problem-solving, I am driven to contribute to analysis and quality assurance tasks, continuously expanding my knowledge in new tools and technologies.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Skills Section */}
+            <section id="skills" className="py-24 px-4 bg-black relative z-10">
+                <div className="container mx-auto max-w-5xl">
+                    <h3 className="text-5xl font-bold text-center text-blue-400 mb-16 animate-fade-in-up drop-shadow-glow">My Technical Matrix</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+                        <SkillCategory title="Core Competencies">
+                            <SkillItem name="Functional Testing" />
+                            <SkillItem name="Manual Testing" />
+                            <SkillItem name="Automation Testing" />
+                            <SkillItem name="API Testing" />
+                            <SkillItem name="SQL" />
+                            <SkillItem name="Basic Programming & Scripting (Java, Python, Shell Scripting)" />
+                            <SkillItem name="Version Control (Git)" />
+                            <SkillItem name="Test Case Creation" />
+                            <SkillItem name="Test Scenario Design" />
+                            <SkillItem name="Bug Reporting" />
+                            <SkillItem name="Severity and Priority Assessment" />
+                            <SkillItem name="Test Documentation" />
+                        </SkillCategory>
+                        <SkillCategory title="Toolset Mastery">
+                            <SkillItem name="Selenium" />
+                            <SkillItem name="JMeter" />
+                            <SkillItem name="Postman" />
+                            <SkillItem name="JIRA" />
+                            <SkillItem name="TestNG" />
+                            <SkillItem name="Maven" />
+                            <SkillItem name="OS (Mac, Windows, Linux)" />
+                        </SkillCategory>
+                        <SkillCategory title="Analytical & Soft Skills">
+                            <SkillItem name="Problem-Solving" />
+                            <SkillItem name="Communication Skill" />
+                            <SkillItem name="Observation Skill" />
+                            <SkillItem name="Analytical Skill" />
+                        </SkillCategory>
+                        <SkillCategory title="Language Protocols">
+                            <SkillItem name="English (Proficient)" />
+                            <SkillItem name="Hindi (Reading & Writing)" />
+                            <SkillItem name="Malayalam (Fluent)" />
+                        </SkillCategory>
+                    </div>
+                </div>
+            </section>
+
+            {/* Work Experience Section */}
+            <section id="experience" className="py-24 px-4 bg-gray-900 relative z-10 shadow-inner-xl border-t border-b border-blue-900">
+                <div className="container mx-auto max-w-5xl">
+                    <h3 className="text-5xl font-bold text-center text-blue-400 mb-16 animate-fade-in-up drop-shadow-glow">Professional Log</h3>
+                    <ExperienceCard
+                        title="AI Trainer"
+                        company="Outlier"
+                        duration="Mar 2024 - Present"
+                        description={[
+                            "Designed and refined effective prompts for AI language models to generate accurate and relevant responses.",
+                            "Analyzed AI-generated outputs to assess accuracy, quality, and relevance, making necessary improvements.",
+                            "Conducted iterative testing and incorporated feedback to enhance prompt effectiveness.",
+                            "Identified patterns and anomalies in AI responses using strong analytical skills.",
+                            "Collaborated with cross-functional teams to optimize AI performance and improve user experience."
+                        ]}
+                    />
+                    <ExperienceCard
+                        title="Intern"
+                        company="Luminar Technolab"
+                        duration="Oct 2024 - Mar 2025"
+                        description={[
+                            "Gained foundational knowledge in software testing principles, including SDLC, STLC, and the importance of testing.",
+                            "Developed skills in test case design, bug identification, and defect management, including severity and priority assessment.",
+                            "Trained in manual, API, and automation testing using Selenium and JMeter for web and performance testing.",
+                            "Acquired knowledge of SQL and Java for database validation and automation scripting."
+                        ]}
+                    />
+                </div>
+            </section>
+
+            {/* Projects Section */}
+            <section id="projects" className="py-24 px-4 bg-black relative z-10">
+                <div className="container mx-auto max-w-5xl">
+                    <h3 className="text-5xl font-bold text-center text-blue-400 mb-16 animate-fade-in-up drop-shadow-glow">Project Data Streams</h3>
+                    <ProjectCard
+                        title="Manual Project - Pestrashop (E-commerce QA)"
+                        description={[
+                            "Test Case Design & Execution: Created and executed detailed test cases covering functional, UI, and usability testing for an e-commerce platform.",
+                            "Bug Reporting & Defect Tracking: Identified, documented, and reported defects, categorizing them based on severity and priority using a structured approach.",
+                            "Defect Analysis & Test Reports: Analyzed defect distribution and prepared comprehensive test reports, providing insights into quality metrics.",
+                            "Cross-Module Testing: Ensured seamless functionality and integration across critical sections like product selection, user authentication, and payment processing."
+                        ]}
+                    />
+                    <ProjectCard
+                        title="Automation Project - Tool Shop (E-commerce Automation)"
+                        description={[
+                            "Automated Test Execution: Executed automated tests for core e-commerce functionalities, including product browsing, add-to-cart, and checkout flows.",
+                            "Data-Driven Testing: Implemented data-driven testing using Selenium and TestNG, ensuring comprehensive test coverage across diverse user scenarios and data sets.",
+                            "Maven-Driven Test Execution & Dependency Management: Utilized Maven for efficient dependency management and streamlined test execution, enhancing project maintainability and scalability."
+                        ]}
+                    />
+
+                    {/* Mini Projects Section */}
+                    <h4 className="text-4xl font-bold text-center text-blue-300 mt-20 mb-10 animate-fade-in-up drop-shadow-glow">Mini-Modules & Protocols</h4>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                        <MiniProjectCard
+                            title="Automated Login Testing"
+                            description="Developed robust automated test scripts for login functionalities using Selenium and Java, ensuring secure and efficient user access."
+                        />
+                        <MiniProjectCard
+                            title="API Testing with Postman"
+                            description="Conducted comprehensive API testing using Postman, validating backend logic, data integrity, and system integrations."
+                        />
+                        <MiniProjectCard
+                            title="Performance Testing with JMeter"
+                            description="Performed critical performance testing using JMeter, evaluating application responsiveness, scalability, and stability under various load conditions."
+                        />
+                        <MiniProjectCard
+                            title="Bug Simulation & Defect Reporting (JIRA)"
+                            description="Simulated diverse bug scenarios and managed the entire defect lifecycle, from reporting to tracking, using JIRA for effective team collaboration."
+                        />
+                    </div>
+                </div>
+            </section>
+
+            {/* Contact Section */}
+            <section id="contact" className="py-24 px-4 bg-gray-900 relative z-10 shadow-inner-xl border-t border-b border-blue-900">
+                <div className="container mx-auto max-w-4xl text-center">
+                    <h3 className="text-5xl font-bold text-blue-400 mb-16 animate-fade-in-up drop-shadow-glow">Initiate Communication</h3>
+                    <div className="flex flex-col md:flex-row justify-center items-center space-y-10 md:space-y-0 md:space-x-16 text-xl">
+                        <ContactItem icon="📞" text="+91-8075422828" link="tel:+918075422828" />
+                        <ContactItem icon="📧" text="ayshashamli1999@gmail.com" link="mailto:ayshashamli1999@gmail.com" />
+                        <ContactItem icon="📍" text="Electronic City, Bangalore" />
+                    </div>
+                    <div className="flex justify-center space-x-10 mt-16">
+                        <SocialLink icon="🔗" text="LinkedIn" href="https://www.linkedin.com/in/aysha-shamli" />
+                        <SocialLink icon="🐙" text="GitHub" href="https://github.com/Aysha-shamli/" />
+                        <SocialLink icon="🌐" text="Portfolio Site" href="https://aysha-shamli.github.io/" />
+                        <SocialLink icon="📚" text="GitBook" href="https://shamli.gitbook.io/" />
+                    </div>
+                </div>
+            </section>
+
+            {/* Footer */}
+            <footer className="bg-gray-950 text-blue-200 py-10 text-center rounded-t-3xl border-t-2 border-blue-700">
+                <div className="container mx-auto">
+                    <p className="text-lg">&copy; {new Date().getFullYear()} Aysha Shamli. All rights reserved. System Operational.</p>
+                </div>
+            </footer>
+
+            {/* Custom Tailwind CSS for animations */}
+            <style>
+                {`
+                @keyframes fade-in-up {
+                    from { opacity: 0; transform: translateY(30px); }
+                    to { opacity: 1; transform: translateY(0); }
                 }
-            });
-        }, observerOptions);
+                @keyframes fade-in-down {
+                    from { opacity: 0; transform: translateY(-30px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+                @keyframes text-flicker {
+                    0%, 19.9%, 22%, 24.9%, 27%, 29.9%, 32%, 34.9%, 37%, 39.9%, 42%, 44.9%, 47%, 49.9%, 52%, 54.9%, 57%, 59.9%, 62%, 64.9%, 67%, 69.9%, 72%, 74.9%, 77%, 79.9%, 82%, 84.9%, 87%, 89.9%, 92%, 94.9%, 97%, 99.9%, 100% {
+                        opacity: 1;
+                        text-shadow: 0 0 5px #00FFFF, 0 0 10px #00FFFF, 0 0 15px #00FFFF, 0 0 20px #00FFFF;
+                    }
+                    20%, 21.9%, 25%, 26.9%, 30%, 31.9%, 35%, 36.9%, 40%, 41.9%, 45%, 46.9%, 50%, 51.9%, 55%, 56.9%, 60%, 61.9%, 65%, 66.9%, 70%, 71.9%, 75%, 76.9%, 80%, 81.9%, 85%, 86.9%, 90%, 91.9%, 95%, 96.9%, 98%, 99.8% {
+                        opacity: 0.5;
+                        text-shadow: none;
+                    }
+                }
+                @keyframes text-typewriter {
+                    from { width: 0; }
+                    to { width: 100%; }
+                }
+                @keyframes button-glow {
+                    0% { box-shadow: 0 0 5px rgba(128, 0, 128, 0.5); } /* Purple glow */
+                    50% { box-shadow: 0 0 20px rgba(128, 0, 128, 0.8), 0 0 30px rgba(128, 0, 128, 0.6); }
+                    100% { box-shadow: 0 0 5px rgba(128, 0, 128, 0.5); }
+                }
+                @keyframes pulse-grid {
+                    0% { opacity: 0.2; }
+                    50% { opacity: 0.3; }
+                    100% { opacity: 0.2; }
+                }
+                @keyframes data-flow-1 {
+                    0% { transform: translateY(-100%) rotate(5deg); opacity: 0.7; }
+                    100% { transform: translateY(200%) rotate(5deg); opacity: 0.7; }
+                }
+                @keyframes data-flow-2 {
+                    0% { transform: translateY(200%) rotate(-5deg); opacity: 0.7; }
+                    100% { transform: translateY(-100%) rotate(-5deg); opacity: 0.7; }
+                }
+                @keyframes data-flow-3 {
+                    0% { transform: translateY(-100%) rotate(2deg); opacity: 0.7; }
+                    100% { transform: translateY(200%) rotate(2deg); opacity: 0.7; }
+                }
+                @keyframes data-flow-4 {
+                    0% { transform: translateY(200%) rotate(-3deg); opacity: 0.6; }
+                    100% { transform: translateY(-100%) rotate(-3deg); opacity: 0.6; }
+                }
+                @keyframes data-flow-5 {
+                    0% { transform: translateY(-100%) rotate(8deg); opacity: 0.6; }
+                    100% { transform: translateY(200%) rotate(8deg); opacity: 0.6; }
+                }
+                @keyframes bg-scroll {
+                    from { background-position: 0% 0%; }
+                    to { background-position: 100% 100%; }
+                }
 
-        fadeInSections.forEach(section => {
-            observer.observe(section);
-        });
+                .drop-shadow-glow {
+                    text-shadow: 0 0 5px #00FFFF, 0 0 10px #00FFFF, 0 0 15px #00FFFF;
+                }
 
-        // Simple smooth scrolling for navigation links
-        document.querySelectorAll('nav a').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-    </script>
-</body>
-</html>
+                /* Delay classes for staggered animations */
+                .delay-0\.5s { animation-delay: 0.5s; }
+                .delay-1s { animation-delay: 1s; }
+                .delay-1\.5s { animation-delay: 1.5s; }
+                .delay-2s { animation-delay: 2s; }
+                `}
+            </style>
+        </div>
+    );
+};
+
+// NavItem Component
+const NavItem = ({ title, sectionId, activeSection, onClick }) => {
+    const isActive = activeSection === sectionId;
+    return (
+        <button
+            onClick={() => onClick(sectionId)}
+            className={`text-lg font-medium px-4 py-2 rounded-full transition duration-300 ease-in-out
+                ${isActive ? 'bg-blue-700 text-white shadow-md shadow-blue-500/50' : 'text-blue-300 hover:text-blue-500 hover:bg-gray-800'}`}
+        >
+            {title}
+        </button>
+    );
+};
+
+// Reusable Circuit Line SVG Component
+const CircuitLine = ({ className }) => (
+    <svg className={`absolute stroke-blue-500 fill-none ${className}`} viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 5 L95 5 L95 95 L5 95 Z" strokeWidth="2" />
+        <path d="M5 50 L95 50" strokeWidth="1" opacity="0.3" />
+        <path d="M50 5 L50 95" strokeWidth="1" opacity="0.3" />
+        <circle cx="20" cy="20" r="3" fill="blue" opacity="0.7" />
+        <circle cx="80" cy="80" r="3" fill="blue" opacity="0.7" />
+        <circle cx="20" cy="80" r="3" fill="blue" opacity="0.7" />
+        <circle cx="80" cy="20" r="3" fill="blue" opacity="0.7" />
+    </svg>
+);
+
+
+// SkillCategory Component
+const SkillCategory = ({ title, children }) => (
+    <div className="bg-gray-900 p-8 rounded-2xl shadow-lg shadow-blue-800/50 hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-2 animate-fade-in-up border border-blue-900">
+        <h4 className="text-3xl font-semibold text-blue-400 mb-6 border-b-2 border-blue-600 pb-3 drop-shadow-glow">{title}</h4>
+        <ul className="list-disc list-inside space-y-3 text-blue-200 text-lg">
+            {children}
+        </ul>
+    </div>
+);
+
+// SkillItem Component
+const SkillItem = ({ name }) => (
+    <li className="flex items-center">
+        <span className="text-blue-500 mr-3">●</span> {name}
+    </li>
+);
+
+// ExperienceCard Component
+const ExperienceCard = ({ title, company, duration, description }) => (
+    <div className="bg-gray-900 p-10 rounded-2xl shadow-lg shadow-blue-800/50 hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-2 animate-fade-in-up mb-12 last:mb-0 border border-blue-900">
+        <h4 className="text-3xl font-semibold text-blue-400 mb-3 drop-shadow-glow">{title}</h4>
+        <p className="text-blue-300 text-xl mb-2">{company}</p>
+        <p className="text-gray-400 text-base mb-6">{duration}</p>
+        <ul className="list-disc list-inside space-y-3 text-blue-200 text-lg">
+            {description.map((item, index) => (
+                <li key={index}>⚡ {item}</li>
+            ))}
+        </ul>
+    </div>
+);
+
+// ProjectCard Component
+const ProjectCard = ({ title, description }) => (
+    <div className="bg-gray-900 p-10 rounded-2xl shadow-lg shadow-blue-800/50 hover:shadow-xl transition-shadow duration-300 transform hover:-translate-y-2 animate-fade-in-up mb-12 last:mb-0 border border-blue-900">
+        <h4 className="text-3xl font-semibold text-blue-400 mb-4 drop-shadow-glow">{title}</h4>
+        <ul className="list-disc list-inside space-y-3 text-blue-200 text-lg">
+            {description.map((item, index) => (
+                <li key={index}>📊 {item}</li>
+            ))}
+        </ul>
+    </div>
+);
+
+// MiniProjectCard Component
+const MiniProjectCard = ({ title, description }) => (
+    <div className="bg-gray-900 p-8 rounded-2xl shadow-lg shadow-blue-800/50 hover:shadow-xl transition-shadow duration-300 transform hover:scale-105 flex flex-col items-center text-center animate-fade-in-up border border-blue-900">
+        <h5 className="text-2xl font-semibold text-blue-400 mb-4 drop-shadow-glow">⚙️ {title}</h5>
+        <p className="text-blue-200 text-lg">{description}</p>
+    </div>
+);
+
+// ContactItem Component
+const ContactItem = ({ icon, text, link }) => (
+    <div className="flex items-center space-x-4">
+        <span className="text-4xl text-blue-500">{icon}</span>
+        {link ? (
+            <a href={link} className="text-blue-200 hover:text-blue-400 transition duration-300 text-xl">
+                {text}
+            </a>
+        ) : (
+            <span className="text-blue-200 text-xl">{text}</span>
+        )}
+    </div>
+);
+
+// SocialLink Component
+const SocialLink = ({ icon, text, href }) => (
+    <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex flex-col items-center space-y-2 text-blue-300 hover:text-blue-500 transition duration-300 transform hover:scale-110"
+    >
+        <span className="text-5xl">{icon}</span>
+        <span className="text-lg font-medium">{text}</span>
+    </a>
+);
+
+export default App;

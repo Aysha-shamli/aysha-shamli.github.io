@@ -127,6 +127,97 @@
             }
         }
 
+        /* Planet animation */
+        .planet-1 {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle at 30% 30%, #a78bfa, #6366f1, #3a0ca3); /* Purple-blue gradient */
+            border-radius: 50%;
+            filter: blur(5px);
+            opacity: 0.7;
+            top: 20%;
+            left: -10%;
+            animation: movePlanet 60s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes movePlanet {
+            0% {
+                transform: translate(0, 0) scale(0.8);
+                opacity: 0.7;
+            }
+            25% {
+                transform: translate(20vw, 15vh) scale(0.9);
+                opacity: 0.8;
+            }
+            50% {
+                transform: translate(50vw, 30vh) scale(1);
+                opacity: 0.9;
+            }
+            75% {
+                transform: translate(80vw, 15vh) scale(0.9);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translate(100vw, 0) scale(0.8);
+                opacity: 0.7;
+            }
+        }
+
+        /* Rocket animation */
+        .rocket-1 {
+            position: absolute;
+            width: 20px;
+            height: 60px;
+            background-color: #f87171; /* Red */
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%); /* Triangle for rocket top */
+            transform: rotate(45deg); /* Initial angle */
+            top: 90%;
+            left: -5%;
+            animation: launchRocket 10s linear infinite;
+            z-index: -1;
+        }
+
+        .rocket-1::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 30px;
+            background: linear-gradient(to bottom, orange, transparent);
+            filter: blur(5px);
+            animation: rocketFlame 0.5s infinite alternate;
+        }
+
+        @keyframes launchRocket {
+            0% {
+                transform: translate(0, 0) rotate(45deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            100% {
+                transform: translate(110vw, -100vh) rotate(45deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes rocketFlame {
+            from {
+                transform: translateX(-50%) scaleY(1);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(-50%) scaleY(1.2);
+                opacity: 0.8;
+            }
+        }
+
+
         /* General section styling */
         section {
             padding: 4rem 0;
@@ -272,6 +363,8 @@
     <div class="starfield"></div>
     <div class="abstract-shape-1"></div>
     <div class="abstract-shape-2"></div>
+    <div class="planet-1"></div> <!-- New Planet element -->
+    <div class="rocket-1"></div> <!-- New Rocket element -->
 
     <!-- Navigation Bar -->
     <nav class="fixed top-0 left-0 right-0 z-50 bg-gray-900 bg-opacity-70 backdrop-blur-md p-4 shadow-lg rounded-b-xl">
@@ -498,10 +591,7 @@
                     <i class="fas fa-envelope text-purple-400 mr-3"></i>
                     <a href="mailto:ayshashamli1999@gmail.com" class="hover:underline">ayshashamli1999@gmail.com</a>
                 </p>
-                <p class="flex items-center justify-center text-xl text-gray-200">
-                    <i class="fas fa-phone text-purple-400 mr-3"></i>
-                    <a href="tel:+918075422828" class="hover:underline">+91-8075422828</a>
-                </p>
+                <!-- Removed mobile number line -->
                 <p class="flex items-center justify-center text-xl text-gray-200">
                     <i class="fas fa-map-marker-alt text-purple-400 mr-3"></i>
                     Electronic City, Bangalore
